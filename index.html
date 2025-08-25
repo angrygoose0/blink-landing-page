@@ -9,7 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="app.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="app.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
   <body>
@@ -17,7 +18,7 @@
       <a href="#" class="logo" aria-label="blink home">blink</a>
       <div class="hero-inner">
         <h1 class="hero-title">The spontaneous dating app.</h1>
-        <form class="signup-form" action="#" method="post" x-data="signup()" x-on:submit.prevent="submit">
+        <form class="signup-form" action="#" method="post" x-data="signup()" x-on:submit.prevent="submit()">
           <label for="email" class="sr-only">Email address</label>
           <input
             id="email"
