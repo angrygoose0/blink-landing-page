@@ -8,28 +8,49 @@ window.signup = function signup() {
     formEmail: '',
     loading: false,
     message: '',
+    submitted: false,
+    showThanks: false,
+    hasError: false,
+    isShaking: false,
     async submit() {
       if (!this.formEmail) {
-        this.message = 'Please enter an email.';
+        this.triggerError();
         return;
       }
       this.loading = true;
       this.message = '';
+      this.hasError = false;
       try {
         const { error } = await supabase.from('pre-sale').insert({ email: this.formEmail });
         if (error) {
-          this.message = 'Something went wrong. Please try again.';
           console.error(error);
+          this.triggerError();
         } else {
-          this.message = 'Thanks — you are on the list!';
+          this.submitted = true;
+          const thanksMessage = 'Thanks — you are on the list!';
           this.formEmail = '';
+          setTimeout(() => {
+            this.message = thanksMessage;
+            this.showThanks = true;
+          }, 300);
         }
       } catch (err) {
-        this.message = 'Unexpected error. Please try again.';
         console.error(err);
+        this.triggerError();
       } finally {
         this.loading = false;
       }
+    },
+    triggerError() {
+      this.hasError = true;
+      this.isShaking = false;
+      // Restart shake animation
+      setTimeout(() => {
+        this.isShaking = true;
+        setTimeout(() => {
+          this.isShaking = false;
+        }, 500);
+      }, 0);
     }
   };
 };

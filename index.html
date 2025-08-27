@@ -30,9 +30,22 @@
             required
             autocomplete="email"
             inputmode="email"
+            x-show="!submitted"
+            x-transition.opacity.scale.duration.300ms
+            x-on:input="hasError = false"
+            :class="{ 'is-error': hasError, 'is-shaking': isShaking }"
           />
-          <button type="submit" class="signup-button" :disabled="loading">Join presale + beta</button>
-          <span x-show="message" x-text="message" aria-live="polite"></span>
+          <button
+            type="submit"
+            class="signup-button"
+            :disabled="loading"
+            x-show="!submitted"
+            x-transition.opacity.scale.duration.300ms
+            :class="{ 'is-error': hasError, 'is-shaking': isShaking }"
+          >
+            Join presale + beta
+          </button>
+          <span class="thanks-text" x-show="showThanks" x-text="message" aria-live="polite" x-transition.opacity.duration.300ms></span>
         </form>
       </div>
     </section>
