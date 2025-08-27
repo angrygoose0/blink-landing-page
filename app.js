@@ -3,6 +3,39 @@ const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
+// Theme toggling
+(function setupThemeToggle() {
+  const THEME_KEY = 'blink-theme';
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  const toggleBtn = document.querySelector('.theme-toggle');
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      if (metaTheme) metaTheme.setAttribute('content', '#F9E6EE');
+      if (toggleBtn) toggleBtn.textContent = '🌙';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      if (metaTheme) metaTheme.setAttribute('content', '#A93765');
+      if (toggleBtn) toggleBtn.textContent = '🌓';
+    }
+  }
+
+  // Initialize from storage
+  const stored = localStorage.getItem(THEME_KEY);
+  applyTheme(stored === 'light' ? 'light' : 'dark');
+
+  // Wire click handler
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      const next = isLight ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem(THEME_KEY, next);
+    });
+  }
+})();
+
 window.signup = function signup() {
   return {
     formEmail: '',
@@ -27,7 +60,7 @@ window.signup = function signup() {
           this.triggerError();
         } else {
           this.submitted = true;
-          const thanksMessage = 'Thanks — you are on the list!';
+          const thanksMessage = 'ty...';
           this.formEmail = '';
           setTimeout(() => {
             this.message = thanksMessage;

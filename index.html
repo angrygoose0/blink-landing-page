@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>blink — The spontaneous dating app.</title>
+    <title>blink — the spontaneous dating app.</title>
     <meta name="theme-color" content="#A93765">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,7 @@
   <body>
     <section class="hero">
       <a href="#" class="logo" aria-label="blink home">blink</a>
+      <button class="theme-toggle" aria-label="Toggle color scheme" title="Toggle theme">🌓</button>
       <div class="hero-inner">
         <div class="concept-wave" aria-label="BeReal + Tinder">
           <span class="char" style="--i:0">B</span>
@@ -34,7 +35,7 @@
           <span class="char" style="--i:13">e</span>
           <span class="char" style="--i:14">r</span>
         </div>
-        <h1 class="hero-title">The spontaneous dating app.</h1>
+        <h1 class="hero-title">the spontaneous dating app.</h1>
         <form class="signup-form" action="#" method="post" x-data="signup()" x-on:submit.prevent="submit()">
           <label for="email" class="sr-only">Email address</label>
           <input
@@ -60,7 +61,7 @@
             x-transition.opacity.scale.duration.300ms
             :class="{ 'is-error': hasError, 'is-shaking': isShaking }"
           >
-            Join presale + beta
+            apply for beta
           </button>
           <span class="thanks-text" x-show="showThanks" x-text="message" aria-live="polite" x-transition.opacity.duration.300ms></span>
         </form>
