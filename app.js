@@ -3,37 +3,23 @@ const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-// Theme toggling
-(function setupThemeToggle() {
-  const THEME_KEY = 'blink-theme';
+// Theme initialization
+(function setupTheme() {
   const metaTheme = document.querySelector('meta[name="theme-color"]');
-  const toggleBtn = document.querySelector('.theme-toggle');
 
   function applyTheme(theme) {
     if (theme === 'light') {
       document.documentElement.setAttribute('data-theme', 'light');
       if (metaTheme) metaTheme.setAttribute('content', '#F9E6EE');
-      if (toggleBtn) toggleBtn.textContent = '🌙';
     } else {
       document.documentElement.removeAttribute('data-theme');
       if (metaTheme) metaTheme.setAttribute('content', '#A93765');
-      if (toggleBtn) toggleBtn.textContent = '🌓';
     }
   }
 
-  // Initialize from storage
-  const stored = localStorage.getItem(THEME_KEY);
-  applyTheme(stored === 'light' ? 'light' : 'dark');
-
-  // Wire click handler
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      const next = isLight ? 'dark' : 'light';
-      applyTheme(next);
-      localStorage.setItem(THEME_KEY, next);
-    });
-  }
+  // Initialize randomly on each load
+  const initial = Math.random() < 0.5 ? 'light' : 'dark';
+  applyTheme(initial);
 })();
 
 window.signup = function signup() {
@@ -54,13 +40,16 @@ window.signup = function signup() {
       this.message = '';
       this.hasError = false;
       try {
-        const { error } = await supabase.from('pre-sale').insert({ email: this.formEmail });
+        const currentTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        const { error } = await supabase
+          .from('pre-sale')
+          .insert({ email: this.formEmail, theme: currentTheme });
         if (error) {
           console.error(error);
           this.triggerError();
         } else {
           this.submitted = true;
-          const thanksMessage = 'ty...';
+          const thanksMessage = 'thank you !!';
           this.formEmail = '';
           setTimeout(() => {
             this.message = thanksMessage;
